@@ -20,15 +20,20 @@ def main():
 
         grid=GridSearchCV(model, param_grid,cv=3, verbose=4, iid=True)
         grid.fit(X_train,y_train)
-
         grid_predictions=grid.predict(X_test)
         cm=confusion_matrix(y_test,grid_predictions)
         report=classification_report(y_test,grid_predictions)
         
+        ''' 
+        without doing the gridsearch just using the default params - bad results
+        model.fit(X_train,y_train)
+        pred=model.predict(X_test)
+        cm=confusion_matrix(y_test,pred)
+        report=classification_report(y_test,pred)
+        '''
+
         print(cm)
         print(report)
-
-
 
 
 if __name__ == '__main__':
