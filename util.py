@@ -29,9 +29,9 @@ def parse_args():
 def data_load(filename):
     data = pd.read_csv(filename).to_numpy(dtype=np.float32)
     # Get rid of time feature to see what happens`
-    X, y = data[:, :-1], data[:, -1]
+    X, y = data[:, 1:-1], data[:, -1]
     X, y = shuffle(X, y)
-    return X[:100000], y[:100000]
+    return X, y
 
 def normalize(X_train, X_test):
     mean_pixel = X_train.mean(axis=(0, 1), keepdims=True)
