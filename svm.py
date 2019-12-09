@@ -18,7 +18,7 @@ def main():
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
 
-        grid=GridSearchCV(model, param_grid,cv=3, verbose=4, iid=True)
+        grid=GridSearchCV(model, param_grid,cv=3, verbose=4)
         grid.fit(X_train,y_train)
         grid_predictions=grid.predict(X_test)
         cm=confusion_matrix(y_test,grid_predictions)
