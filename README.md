@@ -17,3 +17,7 @@
 - Both Adaboost and nn reach a true positive rate ranging from 70 to 75%
 - No idea why we can reach this result, need further investigation
 
+### 2019/12/08
+- Note that at this point dataset has not been upsampled yet - (meaning repopulate fraud cases to reach 4k cases). In other words, we still use the original data here
+- Create SVM 
+- Implment Roc curve functions that can be used across all model methods
