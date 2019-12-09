@@ -13,14 +13,15 @@ def main():
     X, y = util.data_load(opts.dataset)
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     model=SVC()
-    param_grid = {"C": [1, 10, 100, 1000], "gamma": [1e-4,1e-3,1e-2,1e-1,1]}
+    #old grid
+    # param_grid = {"C": [1, 10, 100, 1000], "gamma": [1e-4,1e-3,1e-2,1e-1,1]}
+    #new grid
+    param_grid = {"C": [1, 10, 100, 1000], "gamma": [1e-4,1e-3,1e-2,1e-1]}
     for train_index, test_index in skf.split(X, y):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
 
-
         grid=GridSearchCV(model, param_grid,cv=3, verbose=4,iid=False)
-
         grid.fit(X_train,y_train)
         grid_predictions=grid.predict(X_test)
         cm=confusion_matrix(y_test,grid_predictions)
@@ -36,6 +37,7 @@ def main():
 
         print(cm)
         print(report)
+        print("Best_Param_Estimator:", grid.best_estimator_)
 
 
 if __name__ == '__main__':
