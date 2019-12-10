@@ -61,3 +61,16 @@ def extract_true(X, y):
         if y[i] == 1:
             result_x.append(X[i])
     return result_x
+
+def get_roc_curve(mats, model_name):
+    xs, ys = [], []
+    for confusion_matrix in mats:
+        false_positive = confusion_matrix[0][1] / (confusion_matrix[0][0] + confusion_matrix[0][1])
+        true_positive = confusion_matrix[1][1] / (confusion_matrix[1][0] + confusion_matrix[1][1])
+        xs.append(false_positive)
+        ys.append(true_positive)
+    plt.plot(xs, ys, 'b')
+    plt.title("Roc curve for Credit Card Fraud Detection using, " + model_name)
+    plt.xlabel("false positive rate")
+    plt.ylabel("true positive rate")
+    plt.show()
