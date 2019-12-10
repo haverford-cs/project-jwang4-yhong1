@@ -43,8 +43,7 @@ def normalize(X_train, X_test):
     X_test = X_test / std_pixel
     return X_train, X_test
 
-def upsample(X, y, ratio):
-    count = len(y)
+def upsample(X, y, ratio)
     count_true = np.sum(y)
     needed = int((ratio*count-count_true) / (1-ratio))
     tx= extract_true(X, y)
