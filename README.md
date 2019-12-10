@@ -28,5 +28,8 @@
 - Decided to run SVM twice - one with gammaa=1 and one without to see the difference in accuracy & runtime 
 - Implment Roc curve functions that can be used across all model methods
 
-
+### 2019/12/09 (Jiaping)
+- Add upsample function to manually increase weight on examples with true label
+- Performance gets worse on adaboost with a ratio of 0.3
+- Add roc curve
 
