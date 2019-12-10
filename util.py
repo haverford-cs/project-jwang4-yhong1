@@ -42,4 +42,4 @@ def normalize(X_train, X_test):
     X_test = X_test / std_pixel
     return X_train, X_test
 
-data_load("temp.csv")
+#data_load("temp.csv")
