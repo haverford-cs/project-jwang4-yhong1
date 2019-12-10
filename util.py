@@ -13,7 +13,8 @@ def parse_args():
 
     parser.add_option('-d', '--dataset', type='string', help='path to' +\
         ' data file')
-
+    parser.add_option('-u', '--upsample', type='float', help='ratio of upsample' +\
+            'examples with true label')
 
     (opts, args) = parser.parse_args()
 
@@ -42,4 +43,22 @@ def normalize(X_train, X_test):
     X_test = X_test / std_pixel
     return X_train, X_test
 
-data_load("temp.csv")
+def upsample(X, y, ratio):
+    count = len(y)
+    count_true = np.sum(y)
+    needed = int((ratio*count-count_true) / (1-ratio))
+    tx= extract_true(X, y)
+    result_X, result_y = X, y
+    for i in range(needed):
+        idx = int(needed * np.random.random_sample())
+        result_X = np.append(result_X, [X[idx]], axis=0)
+        result_y = np.append(result_y, 1)
+    assert(len(result_X) == len(result_y))
+    return result_X, result_y
+
+def extract_true(X, y):
+    result_x= []
+    for i in range(len(y)):
+        if y[i] == 1:
+            result_x.append(X[i])
+    return result_x
