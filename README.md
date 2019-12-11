@@ -32,3 +32,11 @@
 - Add upsample function to manually increase weight on examples with true label
 - Performance gets worse on adaboost with a ratio of 0.3
 - Add roc curve
+
+### 2019/12/10 (Jiaping)
+- Add another type of upsample, this time we only increase the number of true class by n times
+- Fix the issue with upsample
+- Adaboost reaches a recall rate of 0.85 when upsampling true class by 10 times
+- NN reaches a recall rate of 0.798 when upsampling true class by 10 times
+- Plan to enable adjusting threshold for Adaboost
+- Plan to make roc curve on models with different upsample ratio 
