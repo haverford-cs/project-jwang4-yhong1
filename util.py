@@ -13,9 +13,9 @@ def parse_args():
 
     parser.add_option('-d', '--dataset', type='string', help='path to' +\
         ' data file')
-    parser.add_option('-u', '--upsample', type='float', help='ratio of upsample' +\
+    parser.add_option('-r', '--upsamplet', type='float', help='ratio of upsample' +\
             'examples with true label')
-
+    parser.add_option('-n', '--upsamplen', type='float', help='upsample by n times')
     (opts, args) = parser.parse_args()
 
     mandatories = ['dataset',]
@@ -43,14 +43,14 @@ def normalize(X_train, X_test):
     X_test = X_test / std_pixel
     return X_train, X_test
 
-def upsample(X, y, ratio):
+def upsample(X, y, needed):
+    count = len(y)
     count_true = np.sum(y)
-    needed = int((ratio*count-count_true) / (1-ratio))
     tx= extract_true(X, y)
     result_X, result_y = X, y
     for i in range(needed):
-        idx = int(needed * np.random.random_sample())
-        result_X = np.append(result_X, [X[idx]], axis=0)
+        idx = int(count_true * np.random.random_sample())
+        result_X = np.append(result_X, [tx[idx]], axis=0)
         result_y = np.append(result_y, 1)
     assert(len(result_X) == len(result_y))
     return result_X, result_y
@@ -61,6 +61,15 @@ def extract_true(X, y):
         if y[i] == 1:
             result_x.append(X[i])
     return result_x
+
+def needed_total(X, y, ratio):
+    count = len(y)
+    count_true = np.sum(y)
+    needed = int((ratio*count-count_true) / (1-ratio))
+    return needed
+
+def needed_n(X, y, n):
+    return int(np.sum(y) * (n-1))
 
 def get_roc_curve(mats, model_name, param_name):
     xs, ys = [], []
