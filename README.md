@@ -25,13 +25,16 @@
 
 ### 2019/12/09 (Andy)
 - Figure out & clean up correct params for SVM
-- Decided to run SVM twice - one with gammaa=1 and one without to see the difference in accuracy & runtime 
-- Implment Roc curve functions that can be used across all model methods
+- Decided to run SVM twice - one with gammaa=1 and one without to see the difference in accuracy & runtime (Concluded that we need gamma=1)
+- Investigated the built-in Roc curve functions for our use
 
 ### 2019/12/09 (Jiaping)
 - Add upsample function to manually increase weight on examples with true label
 - Performance gets worse on adaboost with a ratio of 0.3
 - Add roc curve
+
+### 2019/12/10 (Andy)
+- Get rid of kfolds for SVM & still run single SVM multiple times to finish collecting results without upsampling
 
 ### 2019/12/10 (Jiaping)
 - Add another type of upsample, this time we only increase the number of true class by n times
@@ -40,3 +43,10 @@
 - NN reaches a recall rate of 0.798 when upsampling true class by 10 times
 - Plan to enable adjusting threshold for Adaboost
 - Plan to make roc curve on models with different upsample ratio 
+
+### 2019/12/12 (Andy)
+- Clean up the util.py to make some functions more understandable & Added comments to each method to make it more readable for future readers
+- Update SVM to accommodate upsamples
+- Will run SVM with 10X upsample to see the difference in performance
+- Later today, I will figure out a way to plot roc curves for SVM & maybe Adboost & (change the roc curve function a little bit so that 3 models curve can show up in the same axes)
+- will create a results section in README that contains the running results 

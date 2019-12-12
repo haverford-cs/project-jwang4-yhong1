@@ -35,6 +35,7 @@ def data_load(filename):
     return X, y
 
 def normalize(X_train, X_test):
+    #normalize a training dataset
     mean_pixel = X_train.mean(axis=(0, 1), keepdims=True)
     std_pixel = X_train.std(axis=(0, 1), keepdims=True)
     X_train = X_train - mean_pixel
@@ -44,6 +45,7 @@ def normalize(X_train, X_test):
     return X_train, X_test
 
 def upsample(X, y, needed):
+    #upsample the positives cases in a dataset by either a ratio or n multiples
     count = len(y)
     count_true = np.sum(y)
     tx= extract_true(X, y)
@@ -56,6 +58,7 @@ def upsample(X, y, needed):
     return result_X, result_y
 
 def extract_true(X, y):
+    #extracting all the positive cases from a dataset, returns a matrix that contains all the positive cases
     result_x= []
     for i in range(len(y)):
         if y[i] == 1:
@@ -63,15 +66,19 @@ def extract_true(X, y):
     return result_x
 
 def needed_total(X, y, ratio):
+    #calculate the needed val for a upsample ratio
     count = len(y)
     count_true = np.sum(y)
     needed = int((ratio*count-count_true) / (1-ratio))
     return needed
 
 def needed_n(X, y, n):
-    return int(np.sum(y) * (n-1))
+    #calculate the needed val in order to upsample the positives n times
+    needed =int(np.sum(y) * (n-1))
+    return needed
 
 def get_roc_curve(mats, model_name, param_name):
+    #plot the roc curves for a model
     xs, ys = [], []
     for confusion_matrix in mats:
         false_positive = confusion_matrix[0][1] / (confusion_matrix[0][0] + confusion_matrix[0][1])
