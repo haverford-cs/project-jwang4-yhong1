@@ -16,6 +16,8 @@ def parse_args():
     parser.add_option('-r', '--upsamplet', type='float', help='ratio of upsample' +\
             'examples with true label')
     parser.add_option('-n', '--upsamplen', type='float', help='upsample by n times')
+    parser.add_option('-t', '--threshold', type='float', help='threshold used by adaboost')
+    parser.add_option('-s', '--upsamplestart', type='int', help='start point for upsample range')
     (opts, args) = parser.parse_args()
 
     mandatories = ['dataset',]
@@ -27,15 +29,15 @@ def parse_args():
 
     return opts
 
+# Read in and shuffle data
 def data_load(filename):
     data = pd.read_csv(filename).to_numpy(dtype=np.float32)
-    # Get rid of time feature to see what happens`
-    X, y = data[:, 1:-1], data[:, -1]
+    X, y = data[:,1 :-1], data[:, -1]
     X, y = shuffle(X, y)
     return X, y
 
+# Data normalization
 def normalize(X_train, X_test):
-    #normalize a training dataset
     mean_pixel = X_train.mean(axis=(0, 1), keepdims=True)
     std_pixel = X_train.std(axis=(0, 1), keepdims=True)
     X_train = X_train - mean_pixel
@@ -44,8 +46,8 @@ def normalize(X_train, X_test):
     X_test = X_test / std_pixel
     return X_train, X_test
 
+# Draw data points randomly without replacement
 def upsample(X, y, needed):
-    #upsample the positives cases in a dataset by either a ratio or n multiples
     count = len(y)
     count_true = np.sum(y)
     tx= extract_true(X, y)
@@ -57,28 +59,32 @@ def upsample(X, y, needed):
     assert(len(result_X) == len(result_y))
     return result_X, result_y
 
+# Take all examples with true label
 def extract_true(X, y):
-    #extracting all the positive cases from a dataset, returns a matrix that contains all the positive cases
     result_x= []
     for i in range(len(y)):
         if y[i] == 1:
             result_x.append(X[i])
     return result_x
 
+# @Deprecated
+# No longer in use since upsample process takes too much time
+# Helper function for upsampling. Compute how many data needed to make true class 
+# take up ratio percent of the final dataset
 def needed_total(X, y, ratio):
-    #calculate the needed val for a upsample ratio
     count = len(y)
     count_true = np.sum(y)
     needed = int((ratio*count-count_true) / (1-ratio))
     return needed
 
+# Helper function for upsampling. Compute how many data needed to make true class
+# n times more
 def needed_n(X, y, n):
-    #calculate the needed val in order to upsample the positives n times
     needed =int(np.sum(y) * (n-1))
     return needed
 
+# Take a number of confusion matrix, generate a roc curve
 def get_roc_curve(mats, model_name, param_name):
-    #plot the roc curves for a model
     xs, ys = [], []
     for confusion_matrix in mats:
         false_positive = confusion_matrix[0][1] / (confusion_matrix[0][0] + confusion_matrix[0][1])

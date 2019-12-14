@@ -8,8 +8,13 @@ import util
 def create_model():
     model = tf.keras.models.Sequential([
                 # Adds a densely-connected layer with 64 units to the model:
-                tf.keras.layers.Dense(64, activation='relu'),
+                tf.keras.layers.Dense(64, activation='relu'), #kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+                # tf.keras.layers.BatchNormalization(),
                 # Add another:
+                # tf.keras.layers.Dense(512, activation='relu'),# kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+                # tf.keras.layers.BatchNormalization(),
+                # tf.keras.layers.Dense(512, activation='relu'),
+                # tf.keras.layers.BatchNormalization(),
                 tf.keras.layers.Dense(64, activation='relu'),
                 # Add a softmax layer with 10 output units:
                 tf.keras.layers.Dense(2, activation='softmax')])
@@ -23,28 +28,25 @@ def main():
     opts = util.parse_args()
     X, y = util.data_load(opts.dataset)
     model = create_model()
-    ratio = opts.upsamplet
-    n = opts.upsamplen
-    if ratio is not None and n is not None:
-        print("User can only choose one type of upsample")
+    n = opts.upsamplen if opts.upsamplen is not None else 1
+    start = n if opts.upsamplestart is None else 1
+    if start > n:
+        print("Upsample start should be larger than end")
         sys.exit()
-    elif ratio is not None:
-        needed = util.needed_total(X, y, ratio)
-        X, y = util.upsample(X, y, needed)
-    elif n is not None:
+    for i in range(start, n + 1):
         needed = util.needed_n(X, y, n)
-        X, y = util.upsample(X, y, needed)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-    X_train, X_test = util.normalize(X_train, X_test)
-    train_dset = tf.data.Dataset.from_tensor_slices((X_train, y_train)).batch(64, drop_remainder=False).shuffle(buffer_size=10000)
-    test_dset = tf.data.Dataset.from_tensor_slices((X_test, y_test)).batch(64)
-    model.fit(train_dset, epochs=10)
-    conf_mat = np.zeros((2, 2), dtype=int)
-    for d, labels in test_dset:
-        predictions = model(d)
-        for i in range(len(d)):
-            conf_mat[labels[i]][np.argmax(predictions[i])] += 1
-    print(conf_mat)
+        temp_X, temp_y = util.upsample(X, y, needed)
+        X_train, X_test, y_train, y_test = train_test_split(temp_X, temp_y, test_size=0.3, random_state=42)
+        X_train, X_test = util.normalize(X_train, X_test)
+        train_dset = tf.data.Dataset.from_tensor_slices((X_train, y_train)).batch(64, drop_remainder=False).shuffle(buffer_size=10000)
+        test_dset = tf.data.Dataset.from_tensor_slices((X_test, y_test)).batch(64)
+        model.fit(train_dset, epochs=10)
+        conf_mat = np.zeros((2, 2), dtype=int)
+        for d, labels in test_dset:
+            predictions = model(d)
+            for i in range(len(d)):
+                conf_mat[labels[i]][np.argmax(predictions[i])] += 1
+            print(conf_mat)
 
 
 if __name__ == '__main__':

@@ -8,24 +8,31 @@ import sys
 def main():
     opts = util.parse_args()
     X, y = util.data_load(opts.dataset)
-    ratio = opts.upsamplet
-    n = opts.upsamplen
-    if ratio is not None and n is not None:
-        print("User can only choose one type of upsample")
+    n = opts.upsamplen if opts.upsamplen is not None else 1
+    start = n if opts.upsamplestart is None else 1
+    if start > n:
+        print("Upsample start should be larger than end")
         sys.exit()
-    elif ratio is not None:
-        needed = util.needed_total(X, y, ratio)
-        X, y = util.upsample(X, y, needed)
-    elif n is not None:
+    thresh = opts.threshold if opts.threshold is not None and opts.threshold >= 0.40 else None
+    for i in range(start, n + 1):
         needed = util.needed_n(X, y, n)
-        X, y = util.upsample(X, y, needed)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-    X_train, X_test = util.normalize(X_train, X_test)
-    clf = AdaBoostClassifier(n_estimators=100, random_state=0)
-    clf.fit(X_train, y_train)
-    predictions = clf.predict(X_test)
-    conf_mat = confusion_matrix(y_test, predictions)
-    print(conf_mat)
+        temp_X, temp_y = util.upsample(X, y, needed)
+        X_train, X_test, y_train, y_test = train_test_split(temp_X, temp_y, test_size=0.3, random_state=42)
+        X_train, X_test = util.normalize(X_train, X_test)
+        clf = AdaBoostClassifier(n_estimators=100, random_state=0)
+        clf.fit(X_train, y_train)
+        all_conf = []
+        if thresh is None:
+            predictions = clf.predict(X_test)
+            conf_mat = confusion_matrix(y_test, predictions)
+            print(conf_mat)
+        else:
+            for i in np.arange(0.4, thresh + 0.01, 0.005):
+                predictions = (clf.predict_proba(X_test)[: ,1] >= i).astype(int)
+                conf_mat = confusion_matrix(y_test, predictions)
+                all_conf.append(conf_mat)
+                print(i)
+                print(conf_mat)
 
 if __name__ == '__main__':
     main()

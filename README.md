@@ -49,4 +49,10 @@
 - Update SVM to accommodate upsamples
 - Will run SVM with 10X upsample to see the difference in performance
 - Later today, I will figure out a way to plot roc curves for SVM & maybe Adboost & (change the roc curve function a little bit so that 3 models curve can show up in the same axes)
-- will create a results section in README that contains the running results 
+- will create a results section in README that contains the running results
+
+### 2019/12/13 (Jiaping)
+- Revise comment style
+- Modify parser and right now we can run adaboost with a threshold range
+- Users can now run models with a range of upsample rate
+- Start to produce final result and plan to delete intermediate code 
