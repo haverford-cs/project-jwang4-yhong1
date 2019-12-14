@@ -9,7 +9,7 @@ from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 
 #running in lab machine 
-#python3 svm.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv
+#python3 svm.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -n 10
 def main():
     opts = util.parse_args()
     X, y = util.data_load(opts.dataset)
@@ -26,7 +26,17 @@ def main():
         needed = util.needed_n(X, y, n)
         X, y = util.upsample(X, y, needed)
 
-    #create & train models
+    #use a good param to improve speed
+    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3,random_state=42)
+    X_train, X_test = util.normalize(X_train, X_test)
+    model=SVC(C=1000,gamma=0.1)
+    model.fit(X_train, y_train)
+    predictions=model.predict(X_test)
+    cm=confusion_matrix(y_test,predictions)
+    report=classification_report(y_test,predictions)
+
+    '''
+    #use grid search to create & train models
     model=SVC()
     param_grid = {"C": [1, 10, 100, 1000], "gamma": [1e-4,1e-3,1e-2,1e-1,1]}
     X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3,random_state=42)
@@ -37,10 +47,11 @@ def main():
     grid_predictions=grid.predict(X_test)
     cm=confusion_matrix(y_test,grid_predictions)
     report=classification_report(y_test,grid_predictions)
+    '''
 
     print(cm)
     print(report)
-    print("Best_Param_Estimator:", grid.best_estimator_)
+    #print("Best_Param_Estimator:", grid.best_estimator_)
 
 
 if __name__ == '__main__':
