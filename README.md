@@ -131,6 +131,10 @@
 [[85293    58]
  [  541  3831]]
 
+#10%
+#upsample=60, recall=0.9
+[[85224    103]
+ [  888  7936]]
 
 ### adaboost:
 Upsample range from 1 time to times:
