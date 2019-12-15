@@ -56,18 +56,80 @@
 - Users can now run models with a range of upsample rate
 - Start to produce final result and plan to delete intermediate code 
 
-### 2019/12/12 (Andy)
-- Fix an error in util parsing - changing the type for '--upsamplen' from 'float' to 'int' to fix the err
+### 2019/12/14 (Andy)
+- change the type for '--upsamplen' from 'float' to 'int'
 - Modified SVM to accomodate new parsing features
 - Added plot_recall_upsample_curve funciton
 - Get all results from running SVM
-- Start to plot all models on the recall_upsample curve
+- Finish ploting all models on the recall_upsample curve
+- create generate_curves.py for creating recall_upsample curve
+- all results updated. Ready to start working on presentation slides tomorrow
 
 
 
 
 ## Model Output Results:
 ### SVM:
+#running SVM with 1-10 upsample 
+
+#upsample=1, recall=0.78
+[[85265    11]
+ [   36   131]]
+
+
+#upsample=2, recall=0.82
+[[85268    11]
+ [   56   255]]
+
+
+#upsample=3, recall=0.81
+[[85306     7]
+ [   81   344]]
+
+
+#upsample=4, recall=0.84
+[[85292    12]
+ [   95   486]]
+
+
+#upsample=5, recall=0.82
+[[85290    12]
+ [  134   597]]
+
+
+#upsample=6, recall=0.81
+[[85288    13]
+ [  166   714]]
+
+#upsample=7, recall=0.82
+[[85300    11]
+ [  186   831]]
+
+
+#upsample=8, recall=0.85
+[[85271    24]
+ [  174  1007]]
+
+
+#upsample=9, recall=0.84
+[[85329    23]
+ [  206  1065]]
+
+
+#upsample=10, recall=0.84  - 1.53%
+[[85279    31]
+ [  233  1228]]
+
+
+#===
+#upsample=20, recall=0.87  - 3.17%
+[[85292    56]
+ [  383  2516]]
+
+#positive case - 4.77%
+#upsample=30, recall=0.88
+[[85293    58]
+ [  541  3831]]
 
 
 ### adaboost:

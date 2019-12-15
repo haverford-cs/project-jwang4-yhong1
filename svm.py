@@ -3,6 +3,7 @@ Initialize SVM
 12/8 2019
 '''
 import util
+import numpy as np
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix, classification_report
@@ -11,6 +12,8 @@ import sys
 
 #running in lab machine 
 #python3 svm.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -n 10
+#running on my own mac
+#python3 svm.py -d /Users/yuxuanhong/Documents/CS_360_ML/Final_Project/credit_data/creditcard.csv  -n 10
 def main():
     opts = util.parse_args()
     X, y = util.data_load(opts.dataset)
@@ -22,8 +25,12 @@ def main():
         print("unsample range error")
         sys.exit()
     for i in range(start,n+1):
-        needed=util.needed_n(X,y,n)
+        print("i",i)
+        needed=util.needed_n(X,y,i)
+        print("needed",needed)
+        print("pre-upsampled len x",len(X))
         upsampled_X,upsampled_y=util.upsample(X,y,needed)
+        print("length of upsampled_X",len(upsampled_X))
         #use a good param to improve speed
         X_train, X_test, y_train, y_test = train_test_split(upsampled_X,upsampled_y,test_size=0.3,random_state=42)
         X_train, X_test = util.normalize(X_train, X_test)

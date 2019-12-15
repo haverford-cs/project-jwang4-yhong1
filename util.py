@@ -15,7 +15,7 @@ def parse_args():
         ' data file')
     parser.add_option('-r', '--upsamplet', type='float', help='ratio of upsample' +\
             'examples with true label')
-    parser.add_option('-n', '--upsamplen', type='int', help='upsample by n times')
+    parser.add_option('-n', '--upsamplen', type='float', help='upsample by n times')
     parser.add_option('-t', '--threshold', type='float', help='threshold used by adaboost')
     parser.add_option('-s', '--upsamplestart', type='int', help='start point for upsample range')
     (opts, args) = parser.parse_args()
