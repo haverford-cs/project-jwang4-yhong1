@@ -1,3 +1,9 @@
+"""
+Adaboost algorithm working with multiple threshold
+Author: Jiaping Wang
+Date: 12/14/2019
+"""
+
 from sklearn.ensemble import AdaBoostClassifier
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -14,8 +20,8 @@ def main():
         print("Upsample start should be larger than end")
         sys.exit()
     thresh = opts.threshold if opts.threshold is not None and opts.threshold >= 0.40 else None
-    for i in range(start, n + 1):
-        needed = util.needed_n(X, y, n)
+    for t in range(start, n + 1):
+        needed = util.needed_n(X, y, t)
         temp_X, temp_y = util.upsample(X, y, needed)
         X_train, X_test, y_train, y_test = train_test_split(temp_X, temp_y, test_size=0.3, random_state=42)
         X_train, X_test = util.normalize(X_train, X_test)
