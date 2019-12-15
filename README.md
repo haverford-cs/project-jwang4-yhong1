@@ -48,7 +48,6 @@
 - Clean up the util.py to make some functions more understandable & Added comments to each method to make it more readable for future readers
 - Update SVM to accommodate upsamples
 - Will run SVM with 10X upsample to see the difference in performance
-- Later today, I will figure out a way to plot roc curves for SVM & maybe Adboost & (change the roc curve function a little bit so that 3 models curve can show up in the same axes)
 - will create a results section in README that contains the running results
 
 ### 2019/12/13 (Jiaping)
@@ -56,3 +55,22 @@
 - Modify parser and right now we can run adaboost with a threshold range
 - Users can now run models with a range of upsample rate
 - Start to produce final result and plan to delete intermediate code 
+
+### 2019/12/12 (Andy)
+- Fix an error in util parsing - changing the type for '--upsamplen' from 'float' to 'int' to fix the err
+- Modified SVM to accomodate new parsing features
+- Added plot_recall_upsample_curve funciton
+- Get all results from running SVM
+- Start to plot all models on the recall_upsample curve
+
+
+
+
+## Model Output Results:
+# SVM:
+
+
+# adaboost:
+
+
+# fcnn:

@@ -15,7 +15,7 @@ def parse_args():
         ' data file')
     parser.add_option('-r', '--upsamplet', type='float', help='ratio of upsample' +\
             'examples with true label')
-    parser.add_option('-n', '--upsamplen', type='float', help='upsample by n times')
+    parser.add_option('-n', '--upsamplen', type='int', help='upsample by n times')
     parser.add_option('-t', '--threshold', type='float', help='threshold used by adaboost')
     parser.add_option('-s', '--upsamplestart', type='int', help='start point for upsample range')
     (opts, args) = parser.parse_args()
@@ -96,3 +96,23 @@ def get_roc_curve(mats, model_name, param_name):
     plt.xlabel("false positive rate")
     plt.ylabel("true positive rate")
     plt.show()
+
+# plot recalls vs upsample graph for 3 models
+# input: model_cm_dict -> {model_name: confusion matrices}
+def plot_recall_upsample_curve(model_cm_dict,upsample_range):
+    model_names=[]
+    for i in model_cm_dict.items():
+        recalls=[]
+        model_name=i[0]
+        model_cms=i[1]
+        model_names.append(model_name)
+        for matrix in model_cms:
+            recall=matrix[1][1] / (matrix[1][0]+matrix[1][1])
+            recalls.append(recall)
+        plt.plot(upsample_range,recalls)
+    plt.title("Recall Vs Upsample Graph for 3 models")
+    plt.xlabel("Upsample")
+    plt.ylabel("Recall(TPR)")
+    plt.legend([model_names[0],model_names[1],model_names[2]])
+    plt.show()
+
