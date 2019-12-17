@@ -46,10 +46,10 @@ def main():
             for i in range(len(d)):
                 temp[labels[i]][np.argmax(predictions[i])] += 1
         conf_fc.append(temp)
-    recall_fc = map(lambda x: util.recall(x), conf_fc)
-    recall_ada = map(lambda x: util.recall(x), conf_ada)
-    recall_svm = map(lambda x: util.recall(x), conf_svm)
-    up_range = range(start, n+1)
+    recall_fc = list(map(lambda x: util.recall(x), conf_fc))
+    recall_ada = list(map(lambda x: util.recall(x), conf_ada))
+    recall_svm = list(map(lambda x: util.recall(x), conf_svm))
+    up_range = np.arange(start, n+1)
     d = {"SVM": recall_svm, "Adaboost": recall_ada, "FC_NN": recall_fc}
     legends = ["SVM", "Adaboost", "FC_NN"]
     for key in d:
