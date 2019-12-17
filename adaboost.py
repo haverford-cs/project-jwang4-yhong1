@@ -20,7 +20,7 @@ def main():
         print("Upsample start should be larger than end")
         sys.exit()
     thresh = opts.threshold if opts.threshold is not None and opts.threshold >= 0.40 else None
-    for t in range(start, n + 1):
+    for t in np.arange(start, n + 1):
         needed = util.needed_n(X, y, t)
         temp_X, temp_y = util.upsample(X, y, needed)
         X_train, X_test, y_train, y_test = train_test_split(temp_X, temp_y, test_size=0.3, random_state=42)

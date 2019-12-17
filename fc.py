@@ -55,7 +55,7 @@ def main():
     if start > n:
         print("Upsample start should be larger than end")
         sys.exit()
-    for t in range(start, n + 1):
+    for t in np.arange(start, n + 1):
         needed = util.needed_n(X, y, t)
         temp_X, temp_y = util.upsample(X, y, needed)
         X_train, X_test, y_train, y_test = train_test_split(temp_X, temp_y, test_size=0.3, random_state=42)
