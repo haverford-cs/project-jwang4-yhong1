@@ -43,7 +43,8 @@ def main():
         temp = np.zeros((2, 2), dtype=int)
         for d, labels in test_dset:
             predictions = fc_nn_model(d)
-            temp[labels[d]][np.argmax(predictions[d])] += 1
+            for i in range(len(d)):
+                temp[labels[i]][np.argmax(predictions[i])] += 1
         conf_fc.append(temp)
     recall_fc = map(lambda x: util.recall(x), conf_fc)
     recall_ada = map(lambda x: util.recall(x), conf_ada)
