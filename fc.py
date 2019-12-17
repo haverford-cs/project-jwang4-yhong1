@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import util
+import sys
 
 
 def create_model():
@@ -56,6 +57,7 @@ def main():
         print("Upsample start should be larger than end")
         sys.exit()
     for t in np.arange(start, n + 1):
+        print("t",t)
         needed = util.needed_n(X, y, t)
         temp_X, temp_y = util.upsample(X, y, needed)
         X_train, X_test, y_train, y_test = train_test_split(temp_X, temp_y, test_size=0.3, random_state=42)
@@ -75,7 +77,7 @@ def main():
         all_conf.append(conf_mat)
         all_conf_layers.append(conf_mat_layers)
     re_fc, re_fc_layer = list(map(lambda x: util.recall(x), all_conf)), list((map(lambda x: util.recall(x), all_conf_layers)))
-    up_range = range(start, n+1)
+    up_range = np.arange(start, n+1)
     plt.plot(up_range, re_fc)
     plt.plot(up_range, re_fc_layer)
     plt.title("2-layer NN vs 3-layer NN")

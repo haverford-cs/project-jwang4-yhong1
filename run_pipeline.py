@@ -5,6 +5,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.metrics import confusion_matrix
 import sys
+import matplotlib.pyplot as plt
 
 import util
 import fc
@@ -14,7 +15,7 @@ def main():
     opts = util.parse_args()
     X, y = util.data_load(opts.dataset)
 
-    fc_nn_model = create_model()
+    fc_nn_model = fc.create_model()
     ada_model = AdaBoostClassifier(n_estimators=100, random_state=0)
     svm_model = SVC(C=1000,gamma=0.1)
     
@@ -34,15 +35,15 @@ def main():
         test_dset = tf.data.Dataset.from_tensor_slices((X_test, y_test)).batch(64)
         ada_model.fit(X_train, y_train)
         svm_model.fit(X_train, y_train)
-        fc_nn_model.fit(train_dset, epoch=10)
+        fc_nn_model.fit(train_dset, epochs=10)
         pred_ada = ada_model.predict(X_test)
         pred_svm = svm_model.predict(X_test)
         conf_ada.append(confusion_matrix(y_test, pred_ada))
         conf_svm.append(confusion_matrix(y_test, pred_svm))
         temp = np.zeros((2, 2), dtype=int)
         for d, labels in test_dset:
-            predictions = fc_nnmodel(d)
-                temp[labels[i]][np.argmax(predictions[i])] += 1
+            predictions = fc_nn_model(d)
+            temp[labels[d]][np.argmax(predictions[d])] += 1
         conf_fc.append(temp)
     recall_fc = map(lambda x: util.recall(x), conf_fc)
     recall_ada = map(lambda x: util.recall(x), conf_ada)
@@ -58,4 +59,5 @@ def main():
     plt.legend(legends)
     plt.show()
 
-    
+if __name__ == '__main__':
+    main()

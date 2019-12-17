@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 import util
 import sys
+import matplotlib.pyplot as plt
 
 def main():
     opts = util.parse_args()
@@ -41,7 +42,8 @@ def main():
                 conf_thresh.append(conf_mat)
                 print(i)
                 print(conf_mat)
-            util.get_roc_curve(conf_thresh, "Adaboost", "threshold") 
+            util.get_roc_curve(conf_thresh, "Adaboost", "threshold")
+            plt.show()
     
 
 if __name__ == '__main__':

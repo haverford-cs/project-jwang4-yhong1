@@ -21,6 +21,8 @@ import matplotlib.pyplot as plt
 
 #running on my own mac
 #python3 svm.py -d /Users/yuxuanhong/Documents/CS_360_ML/Final_Project/credit_data/creditcard.csv  -n 10
+#python3 adaboost.py -d /Users/yuxuanhong/Documents/CS_360_ML/Final_Project/credit_data/creditcard.csv -t 0.5 -n 10
+#python3 run_pipeline.py -d /Users/yuxuanhong/Documents/CS_360_ML/Final_Project/credit_data/creditcard.csv -s 1 -n 10
 def main():
     opts = util.parse_args()
     X, y = util.data_load(opts.dataset)
