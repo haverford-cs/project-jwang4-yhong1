@@ -14,6 +14,11 @@ import matplotlib.pyplot as plt
 
 #running in lab machine 
 #python3 svm.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -n 10
+#python3 svm.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -s 1 -n 10
+#python3 adaboost.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -t 0.5 -n 10
+#python3 fc.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -s 1 -n 10
+#python3 run_pipeline.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -s 1 -n 10
+
 #running on my own mac
 #python3 svm.py -d /Users/yuxuanhong/Documents/CS_360_ML/Final_Project/credit_data/creditcard.csv  -n 10
 def main():
