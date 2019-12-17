@@ -1,4 +1,7 @@
 # Final project for CS360
+# Data- Use this website to download the dataset
+https://www.kaggle.com/mlg-ulb/creditcardfraud#creditcard.csv
+
 # Lab Notebook
 
 ## Development Note:
@@ -65,7 +68,8 @@
 - create generate_curves.py for creating recall_upsample curve
 - all results updated. Ready to start working on presentation slides tomorrow
 
-
+### 2019/12/16 (Andy)
+- Add roc curve & precision recall curves to SVM
 
 
 ## Model Output Results:

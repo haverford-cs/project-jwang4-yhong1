@@ -6,9 +6,11 @@ import util
 import numpy as np
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix, classification_report, plot_roc_curve
 from sklearn.model_selection import train_test_split
 import sys
+from sklearn.metrics import average_precision_score, precision_recall_curve, plot_precision_recall_curve
+import matplotlib.pyplot as plt
 
 #running in lab machine 
 #python3 svm.py -d /homes/yhong1/cs360/Final_Project/data/creditcard.csv -n 10
@@ -24,7 +26,7 @@ def main():
     if start > n:
         print("unsample range error")
         sys.exit()
-    for i in range(start,n+1):
+    for i in np.arange(start,n+1):
         print("i",i)
         needed=util.needed_n(X,y,i)
         print("needed",needed)
@@ -39,6 +41,20 @@ def main():
         predictions=model.predict(X_test)
         cm=confusion_matrix(y_test,predictions)
         report=classification_report(y_test,predictions)
+
+        #precision-recall curve
+        y_score = model.decision_function(X_test)
+        average_precision = average_precision_score(y_test, y_score)
+        disp=plot_precision_recall_curve(model,X_test,y_test)
+        disp.ax_.set_title('Precision-Recall curve with 10x upsampling: '
+                   'AP={0:0.2f}'.format(average_precision))
+        plt.show()
+
+        #roc curve
+        # svc_roc=plot_roc_curve(model,X_test,y_test)
+        # svc_roc.ax_.set_title('SVM ROC Curve with 10x upsampling')
+        # plt.show()
+
         print(cm)
         print(report)
 
