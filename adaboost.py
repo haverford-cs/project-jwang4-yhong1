@@ -27,18 +27,22 @@ def main():
         X_train, X_test = util.normalize(X_train, X_test)
         clf = AdaBoostClassifier(n_estimators=100, random_state=0)
         clf.fit(X_train, y_train)
-        all_conf = []
+        conf_upsample = []
         if thresh is None:
             predictions = clf.predict(X_test)
             conf_mat = confusion_matrix(y_test, predictions)
+            conf_upsample.append(conf_mat)
             print(conf_mat)
         else:
+            conf_thresh = []
             for i in np.arange(0.4, thresh + 0.01, 0.005):
                 predictions = (clf.predict_proba(X_test)[: ,1] >= i).astype(int)
                 conf_mat = confusion_matrix(y_test, predictions)
-                all_conf.append(conf_mat)
+                conf_thresh.append(conf_mat)
                 print(i)
                 print(conf_mat)
+            util.get_roc_curve(conf_thresh, "Adaboost", "threshold") 
+    
 
 if __name__ == '__main__':
     main()

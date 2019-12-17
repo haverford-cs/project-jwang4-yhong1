@@ -83,6 +83,11 @@ def needed_n(X, y, n):
     needed =int(np.sum(y) * (n-1))
     return needed
 
+def recall(x):
+    assert len(x) == 2
+    assert len(x[0]) == 2
+    return x[1][1] / (x[1][1] + x[1][0])
+
 # Take a number of confusion matrix, generate a roc curve
 def get_roc_curve(mats, model_name, param_name):
     xs, ys = [], []
@@ -115,4 +120,5 @@ def plot_recall_upsample_curve(model_cm_dict,upsample_range):
     plt.ylabel("Recall(TPR)")
     plt.legend([model_names[0],model_names[1],model_names[2]])
     plt.show()
+
 

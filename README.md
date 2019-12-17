@@ -71,6 +71,9 @@ https://www.kaggle.com/mlg-ulb/creditcardfraud#creditcard.csv
 ### 2019/12/16 (Andy)
 - Add roc curve & precision recall curves to SVM
 
+### 2019/12/16 (Jiaping)
+- Get rid of hard code style file (generate_cruve.py)
+- fcnn and adaboost are now able to automatically generate graph
 
 ## Model Output Results:
 ### SVM:
