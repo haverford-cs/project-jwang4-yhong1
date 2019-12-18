@@ -252,3 +252,9 @@ Upsample range from 1 time to times:
        [  238,  1011]]), 
        array([[85267,    42],
        [  209,  1253]])]
+
+# Reference
+# Andy
+# https://towardsdatascience.com/beyond-accuracy-precision-and-recall-3da06bea9f6c
+# https://machinelearningmastery.com/roc-curves-and-precision-recall-curves-for-classification-in-python/
+# sklearn.metrics Documentation
