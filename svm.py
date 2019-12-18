@@ -1,6 +1,7 @@
 '''
-Initialize SVM 
-12/8 2019
+SVM compatible iwth multiple upsample ranges
+Andy Hong
+12/8-17 2019
 '''
 import util
 import numpy as np

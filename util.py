@@ -46,9 +46,8 @@ def normalize(X_train, X_test):
     X_test = X_test / std_pixel
     return X_train, X_test
 
-# Draw data points randomly without replacement
+# Draw data points randomly with replacement
 def upsample(X, y, needed):
-    count = len(y)
     count_true = np.sum(y)
     tx= extract_true(X, y)
     result_X, result_y = X, y

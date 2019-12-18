@@ -6,6 +6,8 @@ https://www.kaggle.com/mlg-ulb/creditcardfraud#creditcard.csv
 - To test adaboost with different thershold, run python3 adaboost.py -d creditcard.csv -n 10 -t 0.5
 - To test adaboost with different upsample rate, run python3 adaboost.py -d creditcard.csv -s 1 -n 10
 - To test fc_nn with different upsample rate, run python3 fc.py -d creditcard.csv -s 1 -n 10
+- To test svm with different upsample rate, run python3 svm.py -d creditcard.csv -s 1 -n 10
+- To test any model with just an upsample ratio but not a range just use "-n". For example, python3 svm.py -d creditcard.csv -n 10
 - The upsample range will be [1, n]
 - To automatically generate curve on three models, run python3 run_pipeline.py -d creditcard.csv -s 1 -n 10
 
@@ -81,6 +83,11 @@ https://www.kaggle.com/mlg-ulb/creditcardfraud#creditcard.csv
 ### 2019/12/16 (Jiaping)
 - Get rid of hard code style file (generate_cruve.py)
 - fcnn and adaboost are now able to automatically generate graph
+
+### 2019/12/16 (Andy)
+- Run all files to get output graphs
+- Mix last bit of stuff on all files
+
 
 ## Model Output Results:
 ### SVM:
